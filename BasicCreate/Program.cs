@@ -18,6 +18,11 @@ namespace BasicExamples
     {
         public static void Main()
         {
+            var ex = new FederationExample();
+            ex.CreateFederation();
+
+            ChangeLogExample.CreateLog();
+
             Create();
             Retrieve();
             Update();
