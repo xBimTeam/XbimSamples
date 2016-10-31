@@ -7,7 +7,7 @@ namespace BasicExamples
 {
     public class FederationExample
     {
-        public void CreateFederation()
+        public static void CreateFederation()
         {
             var editor = new XbimEditorCredentials
             {

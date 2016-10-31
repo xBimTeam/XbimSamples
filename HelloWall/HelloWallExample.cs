@@ -5,6 +5,7 @@ using System.Linq;
 using Xbim.Common;
 using Xbim.Common.Step21;
 using Xbim.Ifc;
+using Xbim.IO;
 using Xbim.Ifc4.ActorResource;
 using Xbim.Ifc4.DateTimeResource;
 using Xbim.Ifc4.ExternalReferenceResource;
@@ -22,10 +23,6 @@ using Xbim.Ifc4.PropertyResource;
 using Xbim.Ifc4.QuantityResource;
 using Xbim.Ifc4.RepresentationResource;
 using Xbim.Ifc4.SharedBldgElements;
-using Xbim.IO;
-
-
-// we need this to use extension methods in VS 2005
 
 
 namespace HelloWall
@@ -39,41 +36,41 @@ namespace HelloWall
         {
             //first create and initialise a model called Hello Wall
             Console.WriteLine("Initialising the IFC Project....");
-            var model = CreateandInitModel("HelloWall");
-            if (model != null)
+            using (var model = CreateandInitModel("HelloWall"))
             {
-                IfcBuilding building = CreateBuilding(model, "Default Building");
-
-
-                IfcWallStandardCase wall = CreateWall(model, 4000, 300, 2400);
-                if (wall != null) AddPropertiesToWall(model, wall);
-                using (var txn = model.BeginTransaction("Add Wall"))
+                if (model != null)
                 {
-                    building.AddElement(wall);
-                    txn.Commit();
+                    IfcBuilding building = CreateBuilding(model, "Default Building");
+                    IfcWallStandardCase wall = CreateWall(model, 4000, 300, 2400);
+
+                    if (wall != null) AddPropertiesToWall(model, wall);
+                    using (var txn = model.BeginTransaction("Add Wall"))
+                    {
+                        building.AddElement(wall);
+                        txn.Commit();
+                    }
+
+                    if (wall != null)
+                    {
+                        try
+                        {
+                            Console.WriteLine("Standard Wall successfully created....");
+                            //write the Ifc File
+                            model.SaveAs("HelloWallIfc4.ifc", IfcStorageType.Ifc);
+                            Console.WriteLine("HelloWallIfc4.ifc has been successfully written");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Failed to save HelloWall.ifc");
+                            Console.WriteLine(e.Message);
+                        }
+                    }
                 }
-
-                if (wall != null)
+                else
                 {
-                    try
-                    {
-                        Console.WriteLine("Standard Wall successfully created....");
-                        //write the Ifc File
-                        model.SaveAs("HelloWallIfc4.ifc",IfcStorageType.Ifc);
-                        Console.WriteLine("HelloWallIfc4.ifc has been successfully written");
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Failed to save HelloWall.ifc");
-                        Console.WriteLine(e.Message);
-                    }
+                    Console.WriteLine("Failed to initialise the model");
                 }
             }
-            else
-            {
-                Console.WriteLine("Failed to initialise the model");
-            }
-
             Console.WriteLine("Press any key to exit to view the IFC file....");
             Console.ReadKey();
             LaunchNotepad("HelloWallIfc4.ifc");

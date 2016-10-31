@@ -91,13 +91,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicModelOperationsExample.cs" />
     <Compile Include="ChangeLogExample.cs" />
     <Compile Include="FederationExample.cs" />
     <Compile Include="InsertCopy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuickStart.cs" />
-    <Compile Include="Retrieve.cs" />
+    <Compile Include="StepToXmlExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
