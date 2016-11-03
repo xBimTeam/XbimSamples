@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Linq;
 using Xbim.Common;
-using Xbim.Ifc;
 
 namespace BasicValidation
 {
