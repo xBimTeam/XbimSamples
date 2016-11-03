@@ -95,6 +95,7 @@
     <Compile Include="ChangeLogExample.cs" />
     <Compile Include="FederationExample.cs" />
     <Compile Include="InsertCopy.cs" />
+    <Compile Include="LinqExample.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuickStart.cs" />

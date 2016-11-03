@@ -11,6 +11,10 @@
             BasicModelOperationsExample.Update();
             BasicModelOperationsExample.Delete();
 
+            LinqExample.SelectionWithLinq();
+            LinqExample.SelectionWithoutLinq();
+            LinqExample.SelectionWithLinqLanguage();
+
             FederationExample.CreateFederation();
             ChangeLogExample.CreateLog();
             StepToXmlExample.Convert();
