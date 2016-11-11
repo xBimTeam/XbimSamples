@@ -115,12 +115,28 @@ namespace ExcelReportExample
         private static IIfcValue GetArea(IIfcProduct product)
         {
             //try to get the value from quantities first
-            var area = product.IsDefinedBy
+            var area =
+                //get all relations which can define property and quantity sets
+                product.IsDefinedBy
+                
+                //Search across all property and quantity sets. 
+                //You might also want to search in a specific quantity set by name
                 .SelectMany(r => r.RelatingPropertyDefinition.PropertySetDefinitions)
+                
+                //Only consider quantity sets in this case.
                 .OfType<IIfcElementQuantity>()
+                
+                //Get all quantities from all quantity sets
                 .SelectMany(qset => qset.Quantities)
+                
+                //We are only interested in areas 
                 .OfType<IIfcQuantityArea>()
-                .FirstOrDefault()?.AreaValue;
+                
+                //We will take the first one. There might obviously be more than one area properties
+                //so you might want to check the name. But we will keep it simple for this example.
+                .FirstOrDefault()?
+                .AreaValue;
+
             if (area != null)
                 return area;
 
@@ -130,7 +146,6 @@ namespace ExcelReportExample
 
         private static IIfcValue GetVolume(IIfcProduct product)
         {
-            //try to get the value from quantities first
             var volume = product.IsDefinedBy
                 .SelectMany(r => r.RelatingPropertyDefinition.PropertySetDefinitions)
                 .OfType<IIfcElementQuantity>()
@@ -139,8 +154,6 @@ namespace ExcelReportExample
                 .FirstOrDefault()?.VolumeValue;
             if (volume != null)
                 return volume;
-
-            //try to get the value from properties
             return GetProperty(product, "Volume");
         }
 
