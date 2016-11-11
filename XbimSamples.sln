@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicExamples", "BasicCreat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicValidation", "BasicValidation\BasicValidation.csproj", "{A0CB0F35-2208-4D10-84D2-F5B9DE8B7BB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelReportExample", "ExcelReportExample\ExcelReportExample.csproj", "{3EB11E9A-5306-4818-AB91-6D77BF38BFCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,14 @@ Global
 		{A0CB0F35-2208-4D10-84D2-F5B9DE8B7BB3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A0CB0F35-2208-4D10-84D2-F5B9DE8B7BB3}.Release|x86.ActiveCfg = Release|Any CPU
 		{A0CB0F35-2208-4D10-84D2-F5B9DE8B7BB3}.Release|x86.Build.0 = Release|Any CPU
+		{3EB11E9A-5306-4818-AB91-6D77BF38BFCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EB11E9A-5306-4818-AB91-6D77BF38BFCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EB11E9A-5306-4818-AB91-6D77BF38BFCD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3EB11E9A-5306-4818-AB91-6D77BF38BFCD}.Debug|x86.Build.0 = Debug|Any CPU
+		{3EB11E9A-5306-4818-AB91-6D77BF38BFCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EB11E9A-5306-4818-AB91-6D77BF38BFCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EB11E9A-5306-4818-AB91-6D77BF38BFCD}.Release|x86.ActiveCfg = Release|Any CPU
+		{3EB11E9A-5306-4818-AB91-6D77BF38BFCD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
