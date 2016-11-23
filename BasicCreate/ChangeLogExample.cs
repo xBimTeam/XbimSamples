@@ -2,7 +2,6 @@
 using Xbim.Common;
 using Xbim.Ifc;
 using Xbim.Ifc4.Interfaces;
-using Xbim.Ifc4.SharedBldgElements;
 using Xbim.IO.Delta;
 using Xbim.IO.Step21;
 
