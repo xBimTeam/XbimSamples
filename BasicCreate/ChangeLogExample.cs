@@ -23,7 +23,7 @@ namespace BasicExamples
                 EditorsOrganisationName = "Independent Architecture"
             };
 
-            using (var model = IfcStore.Open("SampleHouse.ifc", editor, true))
+            using (var model = IfcStore.Open("SampleHouse.ifc", editor))
             {
                 using (var txn = model.BeginTransaction("Modification"))
                 {

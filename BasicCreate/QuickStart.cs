@@ -19,7 +19,7 @@ namespace BasicExamples
                 EditorsGivenName = "Johann Blasius",
                 EditorsOrganisationName = "Independent Architecture"
             };
-            using (var model = IfcStore.Open(fileName, editor, true))
+            using (var model = IfcStore.Open(fileName, editor))
             {
                 using (var txn = model.BeginTransaction("Quick start transaction"))
                 {

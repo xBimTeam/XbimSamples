@@ -118,7 +118,7 @@ namespace BasicExamples
                 EditorsOrganisationName = "Independent Architecture"
             };
 
-            using (var model = IfcStore.Open(fileName, editor, true))
+            using (var model = IfcStore.Open(fileName, editor))
             {
                 //get existing door from the model
                 var id = "3cUkl32yn9qRSPvBJVyWYp";
