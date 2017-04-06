@@ -15,8 +15,8 @@ namespace BasicExamples
             {
                 using (var txn = cobie.BeginTransaction("Test"))
                 {
-                    var component1 = cobie.Instances.New<CobieComponent>(c => c.Name = "Chair");
-                    var component2 = cobie.Instances.New<CobieComponent>(c => c.Name = "Chair");
+                    var component1 = cobie.Instances.New<CobieComponent>(c => c.Name = "Chair A");
+                    var component2 = cobie.Instances.New<CobieComponent>(c => c.Name = "Chair B");
                     var a1 = cobie.Instances.New<CobieAttribute>(c =>
                     {
                         c.Name = "A";
