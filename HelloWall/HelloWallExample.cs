@@ -108,7 +108,7 @@ namespace HelloWall
                 placement.Location = model.Instances.New<IfcCartesianPoint>(p=>p.SetXYZ(0,0,0));
                 //get the project there should only be one and it should exist
                 var project = model.Instances.OfType<IfcProject>().FirstOrDefault();
-                project?.AddBuilding(building);
+                project.AddBuilding(building);
                 txn.Commit();
                 return building;                               
             }          
@@ -379,16 +379,7 @@ namespace HelloWall
                 prv.Name = "IfcPropertyReferenceValue:Material";
                 prv.PropertyReference = ifcMaterial;
             });
-            
-          
-            var ifcMaterialList = model.Instances.New<IfcMaterialList>(ml =>
-                {
-                    ml.Materials.Add(ifcMaterial);
-                    ml.Materials.Add(model.Instances.New<IfcMaterial>(m =>{m.Name = "Cavity";}));
-                    ml.Materials.Add(model.Instances.New<IfcMaterial>(m => { m.Name = "Block"; }));
-                });
-                     
-        
+                              
             var ifcMaterialLayer = model.Instances.New<IfcMaterialLayer>(ml =>
             {
                 ml.Material = ifcMaterial;
