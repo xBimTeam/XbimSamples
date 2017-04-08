@@ -379,16 +379,7 @@ namespace HelloWall
                 prv.Name = "IfcPropertyReferenceValue:Material";
                 prv.PropertyReference = ifcMaterial;
             });
-            
-          
-            var ifcMaterialList = model.Instances.New<IfcMaterialList>(ml =>
-                {
-                    ml.Materials.Add(ifcMaterial);
-                    ml.Materials.Add(model.Instances.New<IfcMaterial>(m =>{m.Name = "Cavity";}));
-                    ml.Materials.Add(model.Instances.New<IfcMaterial>(m => { m.Name = "Block"; }));
-                });
-                     
-        
+                              
             var ifcMaterialLayer = model.Instances.New<IfcMaterialLayer>(ml =>
             {
                 ml.Material = ifcMaterial;
