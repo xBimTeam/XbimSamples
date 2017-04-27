@@ -25,7 +25,8 @@ namespace BasicValidation
                     if (val == null || (expVal != null && expVal.Value == null) )
                     {
                         errCount++;
-                        Console.WriteLine($"#{instance.EntityLabel}={type.ExpressNameUpper}: missing attribute {property.Name} (no. {index})");
+                        Console.WriteLine(string.Format("#{0}={1}: missing attribute {2} (no. {3})",
+                            instance.EntityLabel, type.ExpressNameUpper, property.Name, index));
                     }
                 }
 
@@ -51,12 +52,16 @@ namespace BasicValidation
                         if (min > 0 && count < min)
                         {
                             errCount++;
-                            Console.WriteLine($"#{instance.EntityLabel}={type.ExpressNameUpper}: too few items in {property.Name} (no. {index}). Minimal count is {min}.");
+                            Console.WriteLine(
+                                string.Format("#{0}={1}: too few items in {2} (no. {3}). Minimal count is {4}.",
+                                    instance.EntityLabel, type.ExpressNameUpper, property.Name, index, min));
                         }
                         if (max > 0 && count > max)
                         {
                             errCount++;
-                            Console.WriteLine($"#{instance.EntityLabel}={type.ExpressNameUpper}: too many items in: {property.Name} (no. {index}). Maximum count is {max}.");
+                            Console.WriteLine(
+                                string.Format("#{0}={1}: too many items in: {2} (no. {3}). Maximum count is {4}.",
+                                    instance.EntityLabel, type.ExpressNameUpper, property.Name, index, max));
                         }
                     }
                 }
@@ -64,7 +69,7 @@ namespace BasicValidation
             if (errCount == 0)
                 Console.WriteLine("No errors found.");
             else
-                Console.WriteLine($"{errCount} errors found.");
+                Console.WriteLine(string.Format("{0} errors found.", errCount));
         }
     }
 }

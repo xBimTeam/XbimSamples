@@ -20,7 +20,7 @@ namespace BasicExamples
 
         private static void PrintHierarchy(IIfcObjectDefinition o, int level)
         {
-            Console.WriteLine($"{GetIndent(level)}{o.Name} [{o.GetType().Name}]");
+            Console.WriteLine(string.Format("{0}{1} [{2}]", GetIndent(level), o.Name, o.GetType().Name));
             foreach (var item in o.IsDecomposedBy.SelectMany(r => r.RelatedObjects))
                 PrintHierarchy(item, level +1);
         }

@@ -108,7 +108,7 @@ namespace HelloWall
                 placement.Location = model.Instances.New<IfcCartesianPoint>(p=>p.SetXYZ(0,0,0));
                 //get the project there should only be one and it should exist
                 var project = model.Instances.OfType<IfcProject>().FirstOrDefault();
-                project?.AddBuilding(building);
+                if (project != null) project.AddBuilding(building);
                 txn.Commit();
                 return building;                               
             }          

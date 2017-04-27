@@ -1,10 +1,14 @@
-﻿using NPOI.SS.UserModel;
+﻿using System;
+using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Xbim.Ifc;
 using Xbim.Ifc4.Interfaces;
+using Xbim.Ifc4.MeasureResource;
+
+// ReSharper disable All
 
 namespace ExcelReportExample
 {
@@ -40,7 +44,7 @@ namespace ExcelReportExample
                 var spaces = model.Instances.OfType<IIfcSpace>().ToList();
                 //Set header content
                 sheet.GetRow(0).GetCell(0)
-                    .SetCellValue($"Space Report ({spaces.Count} spaces)");
+                    .SetCellValue(string.Format("Space Report ({0} spaces)", spaces.Count));
                 foreach (var space in spaces)
                 {
                     //write report data
@@ -67,7 +71,7 @@ namespace ExcelReportExample
             row.CreateCell(0).SetCellValue(name);
 
             var floor = GetFloor(space);
-            row.CreateCell(1).SetCellValue(floor?.Name);
+            row.CreateCell(1).SetCellValue(floor != null ? floor.Name.ToString() : "");
 
             var area = GetArea(space);
             if (area != null)
@@ -134,8 +138,7 @@ namespace ExcelReportExample
                 
                 //We will take the first one. There might obviously be more than one area properties
                 //so you might want to check the name. But we will keep it simple for this example.
-                .FirstOrDefault()?
-                .AreaValue;
+                .FirstOrDefault().AreaValue;
 
             if (area != null)
                 return area;
@@ -147,11 +150,16 @@ namespace ExcelReportExample
         private static IIfcValue GetVolume(IIfcProduct product)
         {
             var volume = product.IsDefinedBy
+                             .SelectMany(r => r.RelatingPropertyDefinition.PropertySetDefinitions)
+                             .OfType<IIfcElementQuantity>()
+                             .SelectMany(qset => qset.Quantities)
+                             .OfType<IIfcQuantityVolume>()
+                             .FirstOrDefault() != null ? product.IsDefinedBy
                 .SelectMany(r => r.RelatingPropertyDefinition.PropertySetDefinitions)
                 .OfType<IIfcElementQuantity>()
                 .SelectMany(qset => qset.Quantities)
                 .OfType<IIfcQuantityVolume>()
-                .FirstOrDefault()?.VolumeValue;
+                .FirstOrDefault().VolumeValue : 0;
             if (volume != null)
                 return volume;
             return GetProperty(product, "Volume");
@@ -182,7 +190,7 @@ namespace ExcelReportExample
                     p.Name.ToString().ToLower().Contains(name.ToLower()))
 
                 //only take the first. In reality you should handle this more carefully.
-                .FirstOrDefault()?.NominalValue;
+                .FirstOrDefault().NominalValue;
         }
     }
 }

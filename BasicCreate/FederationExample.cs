@@ -2,6 +2,7 @@
 using Xbim.Common.Step21;
 using Xbim.Ifc;
 using Xbim.Ifc4.Interfaces;
+// ReSharper disable All
 
 namespace BasicExamples
 {
@@ -26,15 +27,18 @@ namespace BasicExamples
                 federation.AddModelReference("SampleHouse.ifc", "Bob The Builder", "Original Constructor"); //IFC4
                 federation.AddModelReference("SampleHouseExtension.ifc", "Tyna", "Extensions Builder"); //IFC2x3
 
-                Console.WriteLine($"Model is federation: {federation.IsFederation}");
-                Console.WriteLine($"Number of overall entities: {federation.FederatedInstances.Count}");
-                Console.WriteLine($"Number of walls: {federation.FederatedInstances.CountOf<IIfcWall>()}");
+                Console.WriteLine(string.Format("Model is federation: {0}", federation.IsFederation));
+                Console.WriteLine(string.Format("Number of overall entities: {0}", federation.FederatedInstances.Count));
+                Console.WriteLine(string.Format("Number of walls: {0}",
+                    federation.FederatedInstances.CountOf<IIfcWall>()));
                 foreach (var refModel in federation.ReferencedModels)
                 {
                     Console.WriteLine();
-                    Console.WriteLine($"    Referenced model: {refModel.Name}");
-                    Console.WriteLine($"    Referenced model organization: {refModel.OwningOrganisation}");
-                    Console.WriteLine($"    Number of walls: {refModel.Model.Instances.CountOf<IIfcWall>()}");
+                    Console.WriteLine(string.Format("    Referenced model: {0}", refModel.Name));
+                    Console.WriteLine(string.Format("    Referenced model organization: {0}",
+                        refModel.OwningOrganisation));
+                    Console.WriteLine(string.Format("    Number of walls: {0}",
+                        refModel.Model.Instances.CountOf<IIfcWall>()));
 
                 }
 

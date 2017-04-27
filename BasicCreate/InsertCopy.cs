@@ -15,20 +15,20 @@ namespace BasicExamples
             {
                 //leave out geometry and placement
                 if (parentObject is IIfcProduct &&
-                    (property.PropertyInfo.Name == nameof(IIfcProduct.Representation) ||
-                    property.PropertyInfo.Name == nameof(IIfcProduct.ObjectPlacement)))
+                    (property.PropertyInfo.Name == "Representation" || // nameof() removed to allow for VS2013 compatibility
+                    property.PropertyInfo.Name == "ObjectPlacement")) // nameof() removed to allow for VS2013 compatibility
                     return null;
 
                 //leave out mapped geometry
                 if (parentObject is IIfcTypeProduct && 
-                    property.PropertyInfo.Name == nameof(IIfcTypeProduct.RepresentationMaps))
+                    property.PropertyInfo.Name == "RepresentationMaps") // nameof() removed to allow for VS2013 compatibility
                     return null;
 
 
                 //only bring over IsDefinedBy and IsTypedBy inverse relationships which will take over all properties and types
                 if (property.EntityAttribute.Order < 0 && !(
-                    property.PropertyInfo.Name == nameof(IIfcProduct.IsDefinedBy) ||
-                    property.PropertyInfo.Name == nameof(IIfcProduct.IsTypedBy)
+                    property.PropertyInfo.Name == "IsDefinedBy" || // nameof() removed to allow for VS2013 compatibility
+                    property.PropertyInfo.Name == "IsTypedBy"      // nameof() removed to allow for VS2013 compatibility
                     ))
                     return null;
 
