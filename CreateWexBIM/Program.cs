@@ -9,7 +9,7 @@ namespace CreateWexBIM
         public static void Main()
         {
             const string fileName = "SampleHouse.ifc";
-            using (var model = IfcStore.Open(fileName))
+            using (var model = IfcStore.Open(fileName, null, -1))
             {
                 var context = new Xbim3DModelContext(model);
                 context.CreateContext();

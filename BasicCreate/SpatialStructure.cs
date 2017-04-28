@@ -21,6 +21,15 @@ namespace BasicExamples
         private static void PrintHierarchy(IIfcObjectDefinition o, int level)
         {
             Console.WriteLine($"{GetIndent(level)}{o.Name} [{o.GetType().Name}]");
+            
+            var spatialElement = o as IIfcSpatialStructureElement;
+            if (spatialElement != null)
+            {
+                var containedElements = spatialElement.ContainsElements.SelectMany(rel => rel.RelatedElements);
+                foreach (var element in containedElements)
+                    Console.WriteLine($"{GetIndent(level)}    ->{element.Name} [{element.GetType().Name}]");
+            }
+
             foreach (var item in o.IsDecomposedBy.SelectMany(r => r.RelatedObjects))
                 PrintHierarchy(item, level +1);
         }
