@@ -24,8 +24,10 @@ namespace BasicExamples
                     var stepWallsCount = stepModel.Instances.CountOf<IIfcWall>();
                     var xmlWallsCount = xmlModel.Instances.CountOf<IIfcWall>();
 
-                    Console.WriteLine($"STEP21 file has {stepCount} entities. XML file has {xmlCount} entities.");
-                    Console.WriteLine($"STEP21 file has {stepWallsCount} walls. XML file has {xmlWallsCount} walls.");
+                    Console.WriteLine(string.Format("STEP21 file has {0} entities. XML file has {1} entities.",
+                        stepCount, xmlCount));
+                    Console.WriteLine(string.Format("STEP21 file has {0} walls. XML file has {1} walls.", stepWallsCount,
+                        xmlWallsCount));
                 }
             }
 

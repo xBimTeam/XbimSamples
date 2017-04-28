@@ -11,6 +11,7 @@ using Xbim.Ifc4.Kernel;
 using Xbim.Ifc4.MeasureResource;
 using Xbim.Ifc4.PropertyResource;
 using Xbim.Ifc4.SharedBldgElements;
+// ReSharper disable All
 
 namespace BasicExamples
 {
@@ -92,7 +93,7 @@ namespace BasicExamples
                 //get one single door 
                 var id = "3cUkl32yn9qRSPvBJVyWYp";
                 var theDoor = model.Instances.FirstOrDefault<IIfcDoor>(d => d.GlobalId == id);
-                Console.WriteLine($"Door ID: {theDoor.GlobalId}, Name: {theDoor.Name}");
+                Console.WriteLine(string.Format("Door ID: {0}, Name: {1}", theDoor.GlobalId, theDoor.Name));
 
                 //get all single-value properties of the door
                 var properties = theDoor.IsDefinedBy
@@ -100,7 +101,7 @@ namespace BasicExamples
                     .SelectMany(r => ((IIfcPropertySet)r.RelatingPropertyDefinition).HasProperties)
                     .OfType<IIfcPropertySingleValue>();
                 foreach (var property in properties)
-                    Console.WriteLine($"Property: {property.Name}, Value: {property.NominalValue}");
+                    Console.WriteLine(string.Format("Property: {0}, Value: {1}", property.Name, property.NominalValue));
             }
         }
 
