@@ -11,7 +11,7 @@ namespace BasicExamples
     {
         public static void ExpandAttributes()
         {
-            using (var cobie = new MemoryModel(new EntityFactory()))
+            using (var cobie = new MemoryModel(new EntityFactoryCobieExpress()))
             {
                 using (var txn = cobie.BeginTransaction("Test"))
                 {

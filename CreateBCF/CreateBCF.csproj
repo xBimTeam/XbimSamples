@@ -41,9 +41,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Xbim.BCF, Version=3.0.6326.26276, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xbim.Bcf.3.1.10-v0001\lib\net45\Xbim.BCF.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Xbim.BCF, Version=4.0.0.0, Culture=neutral, PublicKeyToken=11e3655e576ec5a9, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xbim.Bcf.4.1.1\lib\net45\Xbim.BCF.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

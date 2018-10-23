@@ -27,7 +27,7 @@ using Xbim.Ifc4.SharedBldgElements;
 
 namespace HelloWall
 {
-    class Program 
+    class Program
     {
         /// <summary>
         /// This sample demonstrates the minimum steps to create a compliant IFC model that contains a single standard case wall
@@ -41,12 +41,14 @@ namespace HelloWall
                 if (model != null)
                 {
                     IfcBuilding building = CreateBuilding(model, "Default Building");
+                    IfcBuildingStorey storey = CreateStorey(building);
                     IfcWallStandardCase wall = CreateWall(model, 4000, 300, 2400);
 
                     if (wall != null) AddPropertiesToWall(model, wall);
                     using (var txn = model.BeginTransaction("Add Wall"))
                     {
-                        building.AddElement(wall);
+                        building.AddToSpatialDecomposition(storey);
+                        storey.AddElement(wall);
                         txn.Commit();
                     }
 
@@ -77,13 +79,29 @@ namespace HelloWall
             return 0;
         }
 
+        private static IfcBuildingStorey CreateStorey(IfcBuilding building)
+        {
+            var model = building.Model;
+            IfcBuildingStorey storey;
+            using (var txn = model.BeginTransaction("Storey creation"))
+            {
+                storey = model.Instances.New<IfcBuildingStorey>(s =>
+                {
+                    s.Name = "Default storey";
+                    s.Elevation = 0.0;
+                });
+                txn.Commit();
+            }
+            return storey;
+        }
+
         private static void LaunchNotepad(string fileName)
         {
             Process p;
             try
             {
-       
-                p = new Process {StartInfo = {FileName = fileName, CreateNoWindow = false}};
+
+                p = new Process { StartInfo = { FileName = fileName, CreateNoWindow = false } };
                 p.Start();
             }
             catch (Exception ex)
@@ -99,21 +117,21 @@ namespace HelloWall
             {
                 var building = model.Instances.New<IfcBuilding>();
                 building.Name = name;
-  
+
                 building.CompositionType = IfcElementCompositionEnum.ELEMENT;
-                var localPlacement = model.Instances.New<IfcLocalPlacement>();                   
+                var localPlacement = model.Instances.New<IfcLocalPlacement>();
                 building.ObjectPlacement = localPlacement;
                 var placement = model.Instances.New<IfcAxis2Placement3D>();
                 localPlacement.RelativePlacement = placement;
-                placement.Location = model.Instances.New<IfcCartesianPoint>(p=>p.SetXYZ(0,0,0));
+                placement.Location = model.Instances.New<IfcCartesianPoint>(p => p.SetXYZ(0, 0, 0));
                 //get the project there should only be one and it should exist
                 var project = model.Instances.OfType<IfcProject>().FirstOrDefault();
                 if (project != null) project.AddBuilding(building);
                 txn.Commit();
-                return building;                               
-            }          
+                return building;
+            }
         }
-        
+
 
 
         /// <summary>
@@ -136,13 +154,13 @@ namespace HelloWall
             };
             //now we can create an IfcStore, it is in Ifc4 format and will be held in memory rather than in a database
             //database is normally better in performance terms if the model is large >50MB of Ifc or if robust transactions are required
-            
-            var model = IfcStore.Create(credentials, IfcSchemaVersion.Ifc4,XbimStoreType.InMemoryModel);
-            
+
+            var model = IfcStore.Create(credentials, IfcSchemaVersion.Ifc4, XbimStoreType.InMemoryModel);
+
             //Begin a transaction as all changes to a model are ACID
             using (var txn = model.BeginTransaction("Initialise Model"))
             {
-                
+
                 //create a project
                 var project = model.Instances.New<IfcProject>();
                 //set the units to SI (mm and metres)
@@ -151,7 +169,7 @@ namespace HelloWall
                 //now commit the changes, else they will be rolled back at the end of the scope of the using statement
                 txn.Commit();
             }
-            return model; 
+            return model;
 
         }
         /// <summary>
@@ -194,7 +212,7 @@ namespace HelloWall
                 origin.SetXYZ(0, 0, 0);
                 body.Position = model.Instances.New<IfcAxis2Placement3D>();
                 body.Position.Location = origin;
-             
+
                 //Create a Definition shape to hold the geometry
                 var shape = model.Instances.New<IfcShapeRepresentation>();
                 var modelContext = model.Instances.OfType<IfcGeometricRepresentationContext>().FirstOrDefault();
@@ -205,7 +223,7 @@ namespace HelloWall
 
                 //Create a Product Definition and add the model geometry to the wall
                 var rep = model.Instances.New<IfcProductDefinitionShape>();
-                rep.Representations.Add(shape);                
+                rep.Representations.Add(shape);
                 wall.Representation = rep;
 
                 //now place the wall into the model
@@ -230,7 +248,7 @@ namespace HelloWall
                 ifcMaterialLayerSetUsage.LayerSetDirection = IfcLayerSetDirectionEnum.AXIS2;
                 ifcMaterialLayerSetUsage.DirectionSense = IfcDirectionSenseEnum.NEGATIVE;
                 ifcMaterialLayerSetUsage.OffsetFromReferenceLine = 150;
-                
+
                 // Add material to wall
                 var material = model.Instances.New<IfcMaterial>();
                 material.Name = "some material";
@@ -260,11 +278,11 @@ namespace HelloWall
                 shape2D.RepresentationIdentifier = "Axis";
                 shape2D.RepresentationType = "Curve2D";
                 shape2D.Items.Add(ifcPolyline);
-                rep.Representations.Add(shape2D); 
-                txn.Commit();               
+                rep.Representations.Add(shape2D);
+                txn.Commit();
                 return wall;
             }
-           
+
         }
 
         /// <summary>
@@ -277,8 +295,8 @@ namespace HelloWall
             using (var txn = model.BeginTransaction("Create Wall"))
             {
                 CreateElementQuantity(model, wall);
-                CreateSimpleProperty(model, wall); 
-                txn.Commit(); 
+                CreateSimpleProperty(model, wall);
+                txn.Commit();
             }
         }
 
@@ -314,7 +332,7 @@ namespace HelloWall
                 pev.EnumerationValues.Add(new IfcLabel("Mi"));
 
             });
-            var ifcPropertyBoundedValue = model.Instances.New<IfcPropertyBoundedValue>(pbv => 
+            var ifcPropertyBoundedValue = model.Instances.New<IfcPropertyBoundedValue>(pbv =>
             {
                 pbv.Name = "IfcPropertyBoundedValue:Mass";
                 pbv.Description = "";
@@ -324,7 +342,7 @@ namespace HelloWall
                 {
                     siu.UnitType = IfcUnitEnum.MASSUNIT;
                     siu.Name = IfcSIUnitName.GRAM;
-                    siu.Prefix = IfcSIPrefix.KILO;                  
+                    siu.Prefix = IfcSIPrefix.KILO;
                 });
             });
 
@@ -334,9 +352,9 @@ namespace HelloWall
             {
                 ptv.Name = "IfcPropertyTableValue:Sound";
                 foreach (var item in definingValues)
-	            {
+                {
                     ptv.DefiningValues.Add(item);
-	            }
+                }
                 foreach (var item in definedValues)
                 {
                     ptv.DefinedValues.Add(item);
@@ -356,8 +374,8 @@ namespace HelloWall
                     cd.UnitType = IfcUnitEnum.FREQUENCYUNIT;
                     cd.Name = "dB";
                 });
-                
-                
+
+
             });
 
             var listValues = new List<IfcLabel> { new IfcLabel("Red"), new IfcLabel("Green"), new IfcLabel("Blue"), new IfcLabel("Pink"), new IfcLabel("White"), new IfcLabel("Black"), };
@@ -379,16 +397,16 @@ namespace HelloWall
                 prv.Name = "IfcPropertyReferenceValue:Material";
                 prv.PropertyReference = ifcMaterial;
             });
-            
-          
+
+
             var ifcMaterialList = model.Instances.New<IfcMaterialList>(ml =>
                 {
                     ml.Materials.Add(ifcMaterial);
-                    ml.Materials.Add(model.Instances.New<IfcMaterial>(m =>{m.Name = "Cavity";}));
+                    ml.Materials.Add(model.Instances.New<IfcMaterial>(m => { m.Name = "Cavity"; }));
                     ml.Materials.Add(model.Instances.New<IfcMaterial>(m => { m.Name = "Block"; }));
                 });
-                     
-        
+
+
             var ifcMaterialLayer = model.Instances.New<IfcMaterialLayer>(ml =>
             {
                 ml.Material = ifcMaterial;
@@ -431,7 +449,7 @@ namespace HelloWall
             var ifcAddress = model.Instances.New<IfcPostalAddress>(a =>
             {
                 a.InternalLocation = "Room 101";
-                a.AddressLines.AddRange(new[] { new IfcLabel("12 New road"), new IfcLabel("DoxField" ) });
+                a.AddressLines.AddRange(new[] { new IfcLabel("12 New road"), new IfcLabel("DoxField") });
                 a.Town = "Sunderland";
                 a.PostalCode = "DL01 6SX";
             });
@@ -450,12 +468,12 @@ namespace HelloWall
                 prv.Name = "IfcPropertyReferenceValue:Telecom";
                 prv.PropertyReference = ifcTelecomAddress;
             });
-            
-            
-    
+
+
+
             //lets create the IfcElementQuantity
             var ifcPropertySet = model.Instances.New<IfcPropertySet>(ps =>
-            {              
+            {
                 ps.Name = "Test:IfcPropertySet";
                 ps.Description = "Property Set";
                 ps.HasProperties.Add(ifcPropertySingleValue);
@@ -468,12 +486,12 @@ namespace HelloWall
                 ps.HasProperties.Add(ifcPrValueRef);
                 ps.HasProperties.Add(ifcPrValueTimeSeries);
                 ps.HasProperties.Add(ifcPrValueAddress);
-                ps.HasProperties.Add(ifcPrValueTelecom);             
+                ps.HasProperties.Add(ifcPrValueTelecom);
             });
 
             //need to create the relationship
             model.Instances.New<IfcRelDefinesByProperties>(rdbp =>
-            {                
+            {
                 rdbp.Name = "Property Association";
                 rdbp.Description = "IfcPropertySet associated to wall";
                 rdbp.RelatedObjects.Add(wall);
@@ -514,15 +532,15 @@ namespace HelloWall
                     cd.UnitType = IfcUnitEnum.LENGTHUNIT;
                     cd.Name = "Elephants";
                 });
-                var ifcQuantityCount = model.Instances.New<IfcQuantityCount>(qc =>
-                {
-                    qc.Name = "IfcQuantityCount:Elephant";
-                    qc.CountValue = 12;
-                    qc.Unit = ifcContextDependentUnit;
-                });
+            var ifcQuantityCount = model.Instances.New<IfcQuantityCount>(qc =>
+            {
+                qc.Name = "IfcQuantityCount:Elephant";
+                qc.CountValue = 12;
+                qc.Unit = ifcContextDependentUnit;
+            });
 
 
-             //next quantity IfcQuantityLength using IfcConversionBasedUnit
+            //next quantity IfcQuantityLength using IfcConversionBasedUnit
             var ifcConversionBasedUnit = model.Instances.New<IfcConversionBasedUnit>(cbu =>
             {
                 cbu.ConversionFactor = model.Instances.New<IfcMeasureWithUnit>(mu =>
@@ -534,7 +552,7 @@ namespace HelloWall
                         siu.Prefix = IfcSIPrefix.MILLI;
                         siu.Name = IfcSIUnitName.METRE;
                     });
-                    
+
                 });
                 cbu.Dimensions = model.Instances.New<IfcDimensionalExponents>(de =>
                 {
@@ -559,7 +577,7 @@ namespace HelloWall
 
             //lets create the IfcElementQuantity
             var ifcElementQuantity = model.Instances.New<IfcElementQuantity>(eq =>
-            {               
+            {
                 eq.Name = "Test:IfcElementQuantity";
                 eq.Description = "Measurement quantity";
                 eq.Quantities.Add(ifcQuantityArea);
@@ -569,7 +587,7 @@ namespace HelloWall
 
             //need to create the relationship
             model.Instances.New<IfcRelDefinesByProperties>(rdbp =>
-            {              
+            {
                 rdbp.Name = "Area Association";
                 rdbp.Description = "IfcElementQuantity associated to wall";
                 rdbp.RelatedObjects.Add(wall);
@@ -577,7 +595,7 @@ namespace HelloWall
             });
         }
 
-        
+
 
     }
 }

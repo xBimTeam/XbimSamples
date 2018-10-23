@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xbim.Common;
 using Xbim.Common.Step21;
 using Xbim.Ifc;
+using Xbim.Ifc4.ActorResource;
 using Xbim.Ifc4.Interfaces;
 using Xbim.Ifc4.Kernel;
 using Xbim.Ifc4.MeasureResource;
+using Xbim.Ifc4.ProductExtension;
 using Xbim.Ifc4.PropertyResource;
 using Xbim.Ifc4.SharedBldgElements;
 // ReSharper disable All
@@ -41,6 +40,17 @@ namespace BasicExamples
 
                     //create simple object and use lambda initializer to set the name
                     var wall = model.Instances.New<IfcWall>(w => w.Name = "The very first wall");
+
+                    var site = model.Instances.New<IfcSite>(s => {
+                        s.Name = "Default site";
+                        s.SiteAddress = model.Instances.New<IfcPostalAddress>(a => {
+                            a.Purpose = IfcAddressTypeEnum.SITE;
+                            a.PostalCode = "NE6 2SY";
+                            a.Country = "United Kingdom";
+                            a.Region = "Tyne and Wear";
+                            a.Town = "Newcastle upon Tyne";
+                        });
+                    });
 
                     //set a few basic properties
                     model.Instances.New<IfcRelDefinesByProperties>(rel => {
@@ -76,6 +86,7 @@ namespace BasicExamples
                 }
                 model.SaveAs("BasicWall.ifc");
                 model.SaveAs("BasicWall.ifcxml");
+
             }
         }
 
