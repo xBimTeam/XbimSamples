@@ -21,7 +21,7 @@ namespace BasicExamples
                 EditorsGivenName = "Johann Blasius",
                 EditorsOrganisationName = "Independent Architecture"
             };
-            using (var federation = IfcStore.Create(editor, IfcSchemaVersion.Ifc4, XbimStoreType.InMemoryModel))
+            using (var federation = IfcStore.Create(editor, XbimSchemaVersion.Ifc4, XbimStoreType.InMemoryModel))
             {
 
                 federation.AddModelReference("SampleHouse.ifc", "Bob The Builder", "Original Constructor"); //IFC4

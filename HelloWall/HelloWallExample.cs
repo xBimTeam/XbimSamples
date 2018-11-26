@@ -58,7 +58,7 @@ namespace HelloWall
                         {
                             Console.WriteLine("Standard Wall successfully created....");
                             //write the Ifc File
-                            model.SaveAs("HelloWallIfc4.ifc", IfcStorageType.Ifc);
+                            model.SaveAs("HelloWallIfc4.ifc", StorageType.Ifc);
                             Console.WriteLine("HelloWallIfc4.ifc has been successfully written");
                         }
                         catch (Exception e)
@@ -155,7 +155,7 @@ namespace HelloWall
             //now we can create an IfcStore, it is in Ifc4 format and will be held in memory rather than in a database
             //database is normally better in performance terms if the model is large >50MB of Ifc or if robust transactions are required
 
-            var model = IfcStore.Create(credentials, IfcSchemaVersion.Ifc4, XbimStoreType.InMemoryModel);
+            var model = IfcStore.Create(credentials, XbimSchemaVersion.Ifc4, XbimStoreType.InMemoryModel);
 
             //Begin a transaction as all changes to a model are ACID
             using (var txn = model.BeginTransaction("Initialise Model"))

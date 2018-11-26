@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWall Ifc4", "HelloWall\HelloWall Ifc4.csproj", "{9FA0C65E-31FC-4D17-A040-3CE03EC10C53}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateWexBIM", "CreateWexBIM\CreateWexBIM.csproj", "{BC90AE60-C83D-45FE-A2FC-FC4A3888AD94}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicExamples", "BasicCreate\BasicExamples.csproj", "{38488719-5472-43EB-BB5A-90F433801DEA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicValidation", "BasicValidation\BasicValidation.csproj", "{A0CB0F35-2208-4D10-84D2-F5B9DE8B7BB3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelReportExample", "ExcelReportExample\ExcelReportExample.csproj", "{3EB11E9A-5306-4818-AB91-6D77BF38BFCD}"
 EndProject
@@ -25,12 +23,12 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9FA0C65E-31FC-4D17-A040-3CE03EC10C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9FA0C65E-31FC-4D17-A040-3CE03EC10C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9FA0C65E-31FC-4D17-A040-3CE03EC10C53}.Debug|x86.ActiveCfg = Debug|x86
-		{9FA0C65E-31FC-4D17-A040-3CE03EC10C53}.Debug|x86.Build.0 = Debug|x86
+		{9FA0C65E-31FC-4D17-A040-3CE03EC10C53}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9FA0C65E-31FC-4D17-A040-3CE03EC10C53}.Debug|x86.Build.0 = Debug|Any CPU
 		{9FA0C65E-31FC-4D17-A040-3CE03EC10C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FA0C65E-31FC-4D17-A040-3CE03EC10C53}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9FA0C65E-31FC-4D17-A040-3CE03EC10C53}.Release|x86.ActiveCfg = Release|x86
-		{9FA0C65E-31FC-4D17-A040-3CE03EC10C53}.Release|x86.Build.0 = Release|x86
+		{9FA0C65E-31FC-4D17-A040-3CE03EC10C53}.Release|x86.ActiveCfg = Release|Any CPU
+		{9FA0C65E-31FC-4D17-A040-3CE03EC10C53}.Release|x86.Build.0 = Release|Any CPU
 		{BC90AE60-C83D-45FE-A2FC-FC4A3888AD94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BC90AE60-C83D-45FE-A2FC-FC4A3888AD94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC90AE60-C83D-45FE-A2FC-FC4A3888AD94}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -47,14 +45,6 @@ Global
 		{38488719-5472-43EB-BB5A-90F433801DEA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{38488719-5472-43EB-BB5A-90F433801DEA}.Release|x86.ActiveCfg = Release|Any CPU
 		{38488719-5472-43EB-BB5A-90F433801DEA}.Release|x86.Build.0 = Release|Any CPU
-		{A0CB0F35-2208-4D10-84D2-F5B9DE8B7BB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0CB0F35-2208-4D10-84D2-F5B9DE8B7BB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0CB0F35-2208-4D10-84D2-F5B9DE8B7BB3}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A0CB0F35-2208-4D10-84D2-F5B9DE8B7BB3}.Debug|x86.Build.0 = Debug|Any CPU
-		{A0CB0F35-2208-4D10-84D2-F5B9DE8B7BB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0CB0F35-2208-4D10-84D2-F5B9DE8B7BB3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A0CB0F35-2208-4D10-84D2-F5B9DE8B7BB3}.Release|x86.ActiveCfg = Release|Any CPU
-		{A0CB0F35-2208-4D10-84D2-F5B9DE8B7BB3}.Release|x86.Build.0 = Release|Any CPU
 		{3EB11E9A-5306-4818-AB91-6D77BF38BFCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3EB11E9A-5306-4818-AB91-6D77BF38BFCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EB11E9A-5306-4818-AB91-6D77BF38BFCD}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -74,5 +64,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B4AFDF82-1735-4C19-BBB2-9084D1880FFD}
 	EndGlobalSection
 EndGlobal

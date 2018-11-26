@@ -9,7 +9,7 @@ namespace BasicExamples
     {
         public static void Run()
         {
-            using (var model = IfcStore.Create(IfcSchemaVersion.Ifc4, XbimStoreType.InMemoryModel))
+            using (var model = IfcStore.Create(XbimSchemaVersion.Ifc4, XbimStoreType.InMemoryModel))
             {
                 using (var txn = model.BeginTransaction())
                 {

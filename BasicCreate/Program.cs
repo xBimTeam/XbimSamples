@@ -1,18 +1,22 @@
-﻿using Xbim.Common.Logging;
+﻿using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace BasicExamples
 {
     public class Program
     {
-        
+
         public static void Main()
         {
-            //IfcValueEnum.Export();
-            //return;
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.ColoredConsole()
+                .CreateLogger();
 
-            var log = LoggerFactory.GetLogger(); 
+            var lf = new LoggerFactory().AddSerilog();
+            var log = lf.CreateLogger("ApplicationLogging");
 
-            log.Info("Examples are just about to start.");
+            log.LogInformation("Examples are just about to start.");
 
             QuickStart.Start();
 
@@ -21,13 +25,13 @@ namespace BasicExamples
             BasicModelOperationsExample.Update();
             BasicModelOperationsExample.Delete();
 
-            log.Warn("Always use LINQ instead of general iterations!");
+            log.LogWarning("Always use LINQ instead of general iterations!");
 
             LinqExample.SelectionWithLinq();
             LinqExample.SelectionWithoutLinq();
             LinqExample.SelectionWithLinqLanguage();
 
-            log.Error("This is how the error would be logged with log4net.");
+            log.LogError("This is how the error would be logged with log4net.");
 
             FederationExample.CreateFederation();
             ChangeLogExample.CreateLog();
@@ -35,11 +39,9 @@ namespace BasicExamples
 
             SpatialStructureExample.Show();
 
-            ExpandExample.ExpandAttributes();
-
             NestedCartesianPointListExample.Run();
 
-            log.Info("All examples finished.");
+            log.LogInformation("All examples finished.");
         }
     }
 }

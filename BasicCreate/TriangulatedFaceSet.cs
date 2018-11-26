@@ -3,6 +3,7 @@ using Xbim.Ifc;
 using Xbim.Ifc4.MeasureResource;
 using Xbim.Ifc4.GeometricModelResource;
 using Xbim.Common.Step21;
+using Xbim.Common;
 
 namespace BasicExamples
 {
@@ -11,7 +12,7 @@ namespace BasicExamples
         public static void CreateTriangulatedFaceSet(IfcStore model)
         {
             // only available in IFC4
-            if (model.IfcSchemaVersion != IfcSchemaVersion.Ifc4)
+            if (((IModel)model).SchemaVersion != XbimSchemaVersion.Ifc4)
                 return;
 
             using (var txn = model.BeginTransaction("IfcTriangulatedFaceSet"))

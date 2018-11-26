@@ -29,7 +29,7 @@ namespace BasicExamples
                 EditorsGivenName = "Johann Blasius",
                 EditorsOrganisationName = "Independent Architecture"
             };
-            using (var model = IfcStore.Create(editor, IfcSchemaVersion.Ifc4, XbimStoreType.InMemoryModel))
+            using (var model = IfcStore.Create(editor, XbimSchemaVersion.Ifc4, XbimStoreType.InMemoryModel))
             {
                 using (var txn = model.BeginTransaction("Hello Wall"))
                 {

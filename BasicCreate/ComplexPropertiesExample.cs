@@ -36,7 +36,7 @@ namespace BasicExamples
                 EditorsOrganisationName = "CAS"
             };
 
-            using (var model = IfcStore.Create(credentials, IfcSchemaVersion.Ifc4, XbimStoreType.InMemoryModel))
+            using (var model = IfcStore.Create(credentials, XbimSchemaVersion.Ifc4, XbimStoreType.InMemoryModel))
             //using (var model = new MemoryModel(new Xbim.Ifc4.EntityFactoryIfc4()))
             {
                 ComplexPropertiesExample.model = model;
@@ -149,7 +149,7 @@ namespace BasicExamples
                 EditorsOrganisationName = "CAS"
             };
 
-            using (var model = IfcStore.Create(credentials, IfcSchemaVersion.Ifc4, XbimStoreType.InMemoryModel))
+            using (var model = IfcStore.Create(credentials, XbimSchemaVersion.Ifc4, XbimStoreType.InMemoryModel))
             //using (var model = new MemoryModel(new Xbim.Ifc4.EntityFactoryIfc4()))
             {
                 ComplexPropertiesExample.model = model;

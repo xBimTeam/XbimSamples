@@ -38,7 +38,7 @@ namespace BasicExamples
             using (var model = IfcStore.Open(original))
             {
                 var walls = model.Instances.OfType<IIfcWall>();
-                using (var iModel = IfcStore.Create(model.IfcSchemaVersion, XbimStoreType.InMemoryModel))
+                using (var iModel = IfcStore.Create(((IModel)model).SchemaVersion, XbimStoreType.InMemoryModel))
                 {
                     using (var txn = iModel.BeginTransaction("Insert copy"))
                     {
