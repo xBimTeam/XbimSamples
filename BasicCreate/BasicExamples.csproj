@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
-    <PackageReference Include="Xbim.Essentials" Version="5.0.185" />
+    <PackageReference Include="Xbim.Essentials" Version="5.0.188" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Extensions.Logging">
