@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
 using Xbim.Common;
 using Xbim.Common.Step21;
 using Xbim.Ifc;
@@ -10,6 +13,8 @@ using Xbim.Ifc4.MeasureResource;
 using Xbim.Ifc4.ProductExtension;
 using Xbim.Ifc4.PropertyResource;
 using Xbim.Ifc4.SharedBldgElements;
+using Xbim.IO.Memory;
+using Xbim.IO.Xml.BsConf;
 // ReSharper disable All
 
 namespace BasicExamples
@@ -84,6 +89,7 @@ namespace BasicExamples
 
                     txn.Commit();
                 }
+
                 model.SaveAs("BasicWall.ifc");
                 model.SaveAs("BasicWall.ifcxml");
 

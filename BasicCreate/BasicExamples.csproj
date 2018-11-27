@@ -7,9 +7,9 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Serilog.Extensions.Logging" Version="2.1.0-private-bimpress" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
-    <PackageReference Include="Xbim.Essentials" Version="5.0.175" />
+    <PackageReference Include="Xbim.Essentials" Version="5.0.185" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Extensions.Logging">

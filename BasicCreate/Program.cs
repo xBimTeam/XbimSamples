@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Serilog;
+using Xbim.Common;
 
 namespace BasicExamples
 {
@@ -8,14 +9,20 @@ namespace BasicExamples
 
         public static void Main()
         {
+            // set up Serilog or any other provider which imlements Microsoft.Extensions.Logging.ILogger
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .WriteTo.ColoredConsole()
                 .CreateLogger();
 
+            // set up binding to MS Abstractions
             var lf = new LoggerFactory().AddSerilog();
             var log = lf.CreateLogger("ApplicationLogging");
 
+            // make it available to xBIM
+            XbimLogging.LoggerFactory = lf;
+
+            // use the log yourself
             log.LogInformation("Examples are just about to start.");
 
             QuickStart.Start();
@@ -31,7 +38,7 @@ namespace BasicExamples
             LinqExample.SelectionWithoutLinq();
             LinqExample.SelectionWithLinqLanguage();
 
-            log.LogError("This is how the error would be logged with log4net.");
+            log.LogError("This is how the error would be logged with Serilog.");
 
             FederationExample.CreateFederation();
             ChangeLogExample.CreateLog();

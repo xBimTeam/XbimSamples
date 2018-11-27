@@ -4,6 +4,6 @@
     <TargetFramework>net47</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Xbim.Essentials" Version="5.0.175" />
+    <PackageReference Include="Xbim.Essentials" Version="5.0.185" />
   </ItemGroup>
 </Project>

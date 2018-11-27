@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Serilog;
 using System.IO;
+using Xbim.Common;
 using Xbim.Ifc;
 using Xbim.ModelGeometry.Scene;
 
@@ -18,6 +19,9 @@ namespace CreateWexBIM
             var lf = new LoggerFactory().AddSerilog();
             var log = lf.CreateLogger("WexbimCreation");
             log.LogInformation("Creating wexBIM file from IFC model.");
+
+            // set up xBIM logging. It will use your providers.
+            XbimLogging.LoggerFactory = lf;
 
             const string fileName = @"SampleHouse.ifc";
             log.LogInformation($"File size: {new FileInfo(fileName).Length / 1e6}MB");
