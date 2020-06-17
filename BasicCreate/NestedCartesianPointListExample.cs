@@ -2,6 +2,7 @@
 using Xbim.Ifc;
 using Xbim.Ifc4.GeometricModelResource;
 using Xbim.Ifc4.MeasureResource;
+using Xbim.IO;
 
 namespace BasicExamples
 {

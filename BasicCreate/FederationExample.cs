@@ -2,6 +2,7 @@
 using Xbim.Common.Step21;
 using Xbim.Ifc;
 using Xbim.Ifc4.Interfaces;
+using Xbim.IO;
 // ReSharper disable All
 
 namespace BasicExamples

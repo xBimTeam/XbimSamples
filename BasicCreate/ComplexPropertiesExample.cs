@@ -11,6 +11,7 @@ using Xbim.Ifc4.MeasureResource;
 using Xbim.Ifc4.ProductExtension;
 using Xbim.Ifc4.PropertyResource;
 using Xbim.Ifc4.SharedComponentElements;
+using Xbim.IO;
 using Xbim.IO.Xml;
 
 namespace BasicExamples

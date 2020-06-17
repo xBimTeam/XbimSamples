@@ -4,6 +4,7 @@ using System.IO;
 using Xbim.BCF;
 using Xbim.BCF.XMLNodes;
 
+
 namespace CreateBCF
 {
     class Program
@@ -35,15 +36,13 @@ namespace CreateBCF
                             Comments = new List<BCFComment> {
                                 new BCFComment(
                                     Guid.NewGuid(), 
-                                    Guid.NewGuid(), 
-                                    "open", 
                                     DateTime.Now, 
                                     "Blaseius Aichel", 
                                     "This needs to be replaced completely!") {
-                                    Topic = new AttrIDNode(new Guid("9B981279-4B63-46A0-ABF0-432E27B5ADC0"))
+                                    //Topic = new AttrIDNode(new Guid("9B981279-4B63-46A0-ABF0-432E27B5ADC0"))
                                 }
                             },
-                            Topic = new BCFTopic(new Guid("9B981279-4B63-46A0-ABF0-432E27B5ADC0"), "Sample Topic"),
+                            Topic = new BCFTopic(new Guid("9B981279-4B63-46A0-ABF0-432E27B5ADC0"), "Sample Topic", DateTime.Now, "Author"),
                             Viewpoints = new List<BCFViewpoint> {
                                 new BCFViewpoint(Guid.NewGuid()) { Snapshot = "snapshot01.png", Viewpoint = "Base Viewpoint"}
                             }
@@ -51,9 +50,9 @@ namespace CreateBCF
                         Snapshots = new List<KeyValuePair<string, byte[]>> {
                             new KeyValuePair<string, byte[]>( "snapshot01.png", File.ReadAllBytes("snapshot01.png"))
                         },
-                        Visualization = new VisualizationXMLFile {
+                        //Visualization = new VisualizationXMLFile(new Guid("F18DD535-857C-43BF-97D1-8C33FB781023")){
                             
-                        }
+                        //}
                     }
                 }
             };

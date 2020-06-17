@@ -1,6 +1,7 @@
 ﻿using Xbim.Common;
 using Xbim.Ifc;
 using Xbim.Ifc4.Interfaces;
+using Xbim.IO;
 
 namespace BasicExamples
 {
