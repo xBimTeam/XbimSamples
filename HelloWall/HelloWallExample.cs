@@ -23,7 +23,7 @@ using Xbim.Ifc4.PropertyResource;
 using Xbim.Ifc4.QuantityResource;
 using Xbim.Ifc4.RepresentationResource;
 using Xbim.Ifc4.SharedBldgElements;
-
+using Xbim.Ifc4.PresentationAppearanceResource;
 
 namespace HelloWall
 {
@@ -220,6 +220,22 @@ namespace HelloWall
                 shape.RepresentationType = "SweptSolid";
                 shape.RepresentationIdentifier = "Body";
                 shape.Items.Add(body);
+
+                //create visual style
+                model.Instances.New<IfcStyledItem> (styleItem => {
+                         styleItem.Item = body;
+                         styleItem.Styles.Add(model.Instances.New<IfcSurfaceStyle>(style => {
+                             style.Side = IfcSurfaceSide.BOTH;
+                             style.Styles.Add(model.Instances.New<IfcSurfaceStyleRendering>(rendering => {
+                                 rendering.SurfaceColour = model.Instances.New<IfcColourRgb>(colour => {
+                                     colour.Name = "Orange";
+                                     colour.Red = 1.0;
+                                     colour.Green = 0.5;
+                                     colour.Blue = 0.0;
+                                 });
+                             }));
+                         }));
+                 });
 
                 //Create a Product Definition and add the model geometry to the wall
                 var rep = model.Instances.New<IfcProductDefinitionShape>();

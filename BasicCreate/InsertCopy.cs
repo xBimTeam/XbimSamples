@@ -12,7 +12,7 @@ namespace BasicExamples
             const string original = "SampleHouse.ifc";
             const string inserted = "SampleHouseWalls.ifc";
 
-            PropertyTranformDelegate semanticFilter = (property, parentObject) =>
+            object semanticFilter(Xbim.Common.Metadata.ExpressMetaProperty property, object parentObject)
             {
                 //leave out geometry and placement
                 if (parentObject is IIfcProduct &&
@@ -21,7 +21,7 @@ namespace BasicExamples
                     return null;
 
                 //leave out mapped geometry
-                if (parentObject is IIfcTypeProduct && 
+                if (parentObject is IIfcTypeProduct &&
                     property.PropertyInfo.Name == "RepresentationMaps") // nameof() removed to allow for VS2013 compatibility
                     return null;
 
@@ -34,8 +34,9 @@ namespace BasicExamples
                     return null;
 
                 return property.PropertyInfo.GetValue(parentObject, null);
-            };
+            }
 
+            IfcStore.ModelProviderFactory.UseMemoryModelProvider();
             using (var model = IfcStore.Open(original))
             {
                 var walls = model.Instances.OfType<IIfcWall>();

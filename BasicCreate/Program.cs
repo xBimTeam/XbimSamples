@@ -12,7 +12,7 @@ namespace BasicExamples
             // set up Serilog or any other provider which imlements Microsoft.Extensions.Logging.ILogger
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
-                .WriteTo.ColoredConsole()
+                .WriteTo.Console()
                 .CreateLogger();
 
             // set up binding to MS Abstractions
@@ -40,6 +40,10 @@ namespace BasicExamples
 
             log.LogError("This is how the error would be logged with Serilog.");
 
+            BasicFederationExample.Run();
+
+            InverseSearchExample.Run();
+
             FederationExample.CreateFederation();
             ChangeLogExample.CreateLog();
             StepToXmlExample.Convert();
@@ -47,6 +51,10 @@ namespace BasicExamples
             SpatialStructureExample.Show();
 
             NestedCartesianPointListExample.Run();
+
+            SingleObjectExample.Run();
+
+            GetMaterialsAndContainmentExample.Run();
 
             log.LogInformation("All examples finished.");
         }

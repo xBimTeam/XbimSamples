@@ -15,7 +15,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NPOI" Version="2.4.0" />
-    <PackageReference Include="Xbim.Essentials" Version="5.1.297" />
+    <PackageReference Include="NPOI" Version="2.4.1" />
+    <PackageReference Include="Xbim.Essentials" Version="5.1.323" />
   </ItemGroup>
 </Project>
