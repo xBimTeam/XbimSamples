@@ -34,6 +34,8 @@ namespace BasicExamples
 
             log.LogWarning("Always use LINQ instead of general iterations!");
 
+            CubeWithColourExample.Run();
+
             LinqExample.SelectionWithLinq();
             LinqExample.SelectionWithoutLinq();
             LinqExample.SelectionWithLinqLanguage();

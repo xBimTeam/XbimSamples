@@ -21,7 +21,8 @@ namespace BasicExamples
         {
             using (var w = File.CreateText("InverseSearchResults.csv"))
             {
-                var objCounts = new[] { 100, 200, 500, 1000, 2000};
+                // var objCounts = new[] { 100, 200, 500, 1000, 2000};
+                var objCounts = new[] { 100, 200, 500, 1000};
                 var header = new List<string>();
                 foreach (var count in objCounts)
                 {
