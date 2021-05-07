@@ -35,6 +35,7 @@ namespace BasicExamples
             log.LogWarning("Always use LINQ instead of general iterations!");
 
             CubeWithColourExample.Run();
+            TetrahedronExample.Run();
 
             LinqExample.SelectionWithLinq();
             LinqExample.SelectionWithoutLinq();
@@ -57,6 +58,8 @@ namespace BasicExamples
             SingleObjectExample.Run();
 
             GetMaterialsAndContainmentExample.Run();
+
+            FindPropertiesExample.Run();
 
             log.LogInformation("All examples finished.");
         }
