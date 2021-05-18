@@ -90,21 +90,28 @@ namespace DeflectionExample
                 w.Write("sizes,");
                 w.WriteLine(string.Join(",", sizes.Select(s => $"{s:########}")));
 
-                // no impact of the angle
-                CreateWexbim("ThePipes.ifc", 5,   359, w);
-                CreateWexbim("ThePipes.ifc", 10,  359, w);
-                CreateWexbim("ThePipes.ifc", 20,  359, w);
-                CreateWexbim("ThePipes.ifc", 50,  359, w);
-                CreateWexbim("ThePipes.ifc", 100, 359, w);
-                CreateWexbim("ThePipes.ifc", 250, 359, w);
+                // // no impact of the angle
+                // CreateWexbim("ThePipes.ifc", 5,   359, w);
+                // CreateWexbim("ThePipes.ifc", 10,  359, w);
+                // CreateWexbim("ThePipes.ifc", 20,  359, w);
+                // CreateWexbim("ThePipes.ifc", 50,  359, w);
+                // CreateWexbim("ThePipes.ifc", 100, 359, w);
+                // CreateWexbim("ThePipes.ifc", 250, 359, w);
+                // 
+                // // no impact of linear deflection
+                // CreateWexbim("ThePipes.ifc", 3000, 10, w);
+                // CreateWexbim("ThePipes.ifc", 3000, 20, w);
+                // CreateWexbim("ThePipes.ifc", 3000, 50, w);
+                // CreateWexbim("ThePipes.ifc", 3000, 100, w);
+                // CreateWexbim("ThePipes.ifc", 3000, 150, w);
+                // CreateWexbim("ThePipes.ifc", 3000, 200, w);
 
-                // no impact of linear deflection
-                CreateWexbim("ThePipes.ifc", 3000, 10, w);
-                CreateWexbim("ThePipes.ifc", 3000, 20, w);
-                CreateWexbim("ThePipes.ifc", 3000, 50, w);
-                CreateWexbim("ThePipes.ifc", 3000, 100, w);
-                CreateWexbim("ThePipes.ifc", 3000, 150, w);
-                CreateWexbim("ThePipes.ifc", 3000, 200, w);
+
+                CreateWexbim("ThePipes.ifc", 5, 28, w);
+                CreateWexbim("ThePipes.ifc", 20, 40, w);
+                CreateWexbim("ThePipes.ifc", 100, 60, w);
+
+
             }
 
 
