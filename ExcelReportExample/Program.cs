@@ -165,6 +165,18 @@ namespace ExcelReportExample
             return GetProperty(product, "Volume");
         }
 
+        private static double? GetFinishFloorHeight(IIfcSpace space)
+        {
+            return space.IsDefinedBy
+                .SelectMany(r => r.RelatingPropertyDefinition.PropertySetDefinitions)
+                .OfType<IIfcElementQuantity>()
+                .Where(qs => qs.Name == "Qto_SpaceBaseQuantities")
+                .SelectMany(qset => qset.Quantities)
+                .OfType<IIfcQuantityLength>()
+                .Where(q => q.Name == "FinishFloorHeight")
+                .FirstOrDefault()?.LengthValue;
+        }
+
         private static IIfcValue GetProperty(IIfcProduct product, string name)
         {
             return

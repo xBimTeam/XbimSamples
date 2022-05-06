@@ -7,6 +7,26 @@ namespace BasicExamples
 {
     class SpatialStructureExample
     {
+        public static void GetWindowsInWalls()
+        {
+            const string file = "SampleHouse.ifc";
+
+            using (var model = IfcStore.Open(file))
+            {
+                foreach (var wall in model.Instances.OfType<IIfcWall>())
+                {
+                    var windows = wall.HasOpenings
+                        .Select(rel => rel.RelatedOpeningElement)
+                        .OfType<IIfcOpeningElement>()
+                        .SelectMany(o => o.HasFillings)
+                        .Select(rel => rel.RelatedBuildingElement)
+                        .OfType<IIfcWindow>()
+                        .ToList();
+                    Console.WriteLine($"Wall #{wall.EntityLabel} has {windows.Count} windows.");
+                }
+            }
+        }
+
         public static void Show()
         {
             const string file = "SampleHouse.ifc";

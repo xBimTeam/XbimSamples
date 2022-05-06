@@ -26,40 +26,46 @@ namespace BasicExamples
             log.LogInformation("Examples are just about to start.");
 
             QuickStart.Start();
-
+            
             BasicModelOperationsExample.Create();
             BasicModelOperationsExample.Retrieve();
             BasicModelOperationsExample.Update();
             BasicModelOperationsExample.Delete();
-
+            
             log.LogWarning("Always use LINQ instead of general iterations!");
-
+            
             CubeWithColourExample.Run();
-            TetrahedronExample.Run();
+            TetrahedronExample.Run(TesselationType.PolygonalFaceSet);
+            TetrahedronExample.Run(TesselationType.TriangulatedFaceSet);
+
+            SpatialStructureExample.GetWindowsInWalls();
 
             LinqExample.SelectionWithLinq();
             LinqExample.SelectionWithoutLinq();
             LinqExample.SelectionWithLinqLanguage();
-
+            
             log.LogError("This is how the error would be logged with Serilog.");
-
+            
             BasicFederationExample.Run();
-
+            
             InverseSearchExample.Run();
-
+            
             FederationExample.CreateFederation();
             ChangeLogExample.CreateLog();
             StepToXmlExample.Convert();
-
+            
             SpatialStructureExample.Show();
 
+            
             NestedCartesianPointListExample.Run();
-
+            
             SingleObjectExample.Run();
-
+            
             GetMaterialsAndContainmentExample.Run();
-
+            
             FindPropertiesExample.Run();
+
+            ExtractPsetDefinitions.Run();
 
             log.LogInformation("All examples finished.");
         }

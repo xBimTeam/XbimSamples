@@ -12,10 +12,8 @@ using Xbim.Ifc4.MeasureResource;
 using Xbim.Ifc4.PresentationAppearanceResource;
 using Xbim.Ifc4.PresentationOrganizationResource;
 using Xbim.Ifc4.ProductExtension;
-using Xbim.Ifc4.ProfileResource;
 using Xbim.Ifc4.RepresentationResource;
 using Xbim.Ifc4.SharedBldgElements;
-using Xbim.Ifc4.SharedFacilitiesElements;
 using Xbim.IO;
 
 namespace BasicExamples
@@ -25,7 +23,7 @@ namespace BasicExamples
         /// <summary>
         /// This sample demonstrates the minimum steps to create a compliant IFC model that contains a single standard case cube
         /// </summary>
-        public static void Run()
+        public static void Run(TesselationType tesselationType)
         {
             Log.Information("Initialising the IFC Project....");
 
@@ -47,7 +45,7 @@ namespace BasicExamples
                 {
                     var project = InitializeProject(model, "The Cube Project");
                     var building = CreateBuilding(model, project, "Building for the Cube");
-                    var product = CreateProduct(model, building);
+                    var product = CreateProduct(model, building, tesselationType);
                     txn.Commit();
                 }
 
@@ -126,12 +124,19 @@ namespace BasicExamples
         /// </summary>
         /// <param name="model">Model</param>
         /// <returns>Product with placement and geometry representation</returns>
-        private static IfcProduct CreateProduct(IModel model, IfcBuilding parent)
+        private static IfcProduct CreateProduct(IModel model, IfcBuilding parent, TesselationType tesselationType)
         {
             var i = model.Instances;
-            
-            // geometry as a triangulated face set
-            var body = CreateTetrahedron(model);
+
+            // geometry as a face set
+            IfcRepresentationItem createBody() => tesselationType switch
+            {
+                TesselationType.TriangulatedFaceSet => CreateTriangulatedFaceSet(model),
+                TesselationType.PolygonalFaceSet => CreatePolygonalFaceSet(model),
+                _ => throw new System.NotImplementedException()
+            };
+
+            var body = createBody();
 
             // create a Definition shape to hold the geometry
             var shape = i.New<IfcShapeRepresentation>(s => { 
@@ -193,7 +198,7 @@ namespace BasicExamples
         /// </summary>
         /// <param name="model">Model</param>
         /// <returns>Tetrahedron as a triangulated face set</returns>
-        private static IfcTriangulatedFaceSet CreateTetrahedron(IModel model)
+        private static IfcTriangulatedFaceSet CreateTriangulatedFaceSet(IModel model)
         {
             return model.Instances.New<IfcTriangulatedFaceSet>(tfs => {
                 tfs.Closed = true;
@@ -211,5 +216,32 @@ namespace BasicExamples
                 tfs.CoordIndex.GetAt(3).AddRange(new IfcPositiveInteger[] { 2, 3, 4 });
             });
         }
+
+        private static IfcPolygonalFaceSet CreatePolygonalFaceSet(IModel model)
+        {
+            var polyfaceset = model.Instances.New<IfcPolygonalFaceSet>();
+            polyfaceset.Closed = true;
+
+            polyfaceset.Coordinates = model.Instances.New<IfcCartesianPointList3D>(pl => {
+                pl.CoordList.GetAt(0).AddRange(new IfcLengthMeasure[] { 0, 0, 0 });
+                pl.CoordList.GetAt(1).AddRange(new IfcLengthMeasure[] { 1, 0, 0 });
+                pl.CoordList.GetAt(2).AddRange(new IfcLengthMeasure[] { 0, 1, 0 });
+                pl.CoordList.GetAt(3).AddRange(new IfcLengthMeasure[] { 0, 0, 1 });
+            });
+            polyfaceset.Faces.AddRange(new[] { 
+                model.Instances.New<IfcIndexedPolygonalFace>(face => face.CoordIndex.AddRange(new IfcPositiveInteger[] { 1, 3, 2 })),
+                model.Instances.New<IfcIndexedPolygonalFace>(face => face.CoordIndex.AddRange(new IfcPositiveInteger[] { 1, 2, 4 })),
+                model.Instances.New<IfcIndexedPolygonalFace>(face => face.CoordIndex.AddRange(new IfcPositiveInteger[] { 1, 4, 3 })),
+                model.Instances.New<IfcIndexedPolygonalFace>(face => face.CoordIndex.AddRange(new IfcPositiveInteger[] { 2, 3, 4 }))
+            });
+
+            return polyfaceset;
+        }
+    }
+
+    internal enum TesselationType
+    {
+        TriangulatedFaceSet,
+        PolygonalFaceSet
     }
 }

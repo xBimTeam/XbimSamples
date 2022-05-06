@@ -56,6 +56,7 @@ namespace CreateWexBIM
             using (var model = IfcStore.Open(fileName, null, -1))
             {
                 // model.ModelFactors.DeflectionAngle *= 5;
+                SpatialAnalyses.AnalyseIntersections(model);
 
                 log.LogInformation("Creating wexBIM file from IFC model.");
                 var context = new Xbim3DModelContext(model);

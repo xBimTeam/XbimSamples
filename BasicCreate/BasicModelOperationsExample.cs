@@ -115,6 +115,16 @@ namespace BasicExamples
                     .OfType<IIfcPropertySingleValue>();
                 foreach (var property in properties)
                     Console.WriteLine(string.Format("Property: {0}, Value: {1}", property.Name, property.NominalValue));
+
+                bool LengthOver2000(IIfcWall wall)
+                {
+                    return wall.IsDefinedBy
+                    .Where(r => r.RelatingPropertyDefinition is IIfcPropertySet)
+                    .SelectMany(r => ((IIfcPropertySet)r.RelatingPropertyDefinition).HasProperties)
+                    .OfType<IIfcPropertySingleValue>()
+                    .Any(p => p.Name == "Length" && p.NominalValue is IfcLengthMeasure length && length > 2000);
+                }
+                var wallsOver2000 = model.Instances.Where<IIfcWall>(LengthOver2000); 
             }
         }
 
