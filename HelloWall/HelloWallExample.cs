@@ -253,6 +253,9 @@ namespace HelloWall
                 lp.RelativePlacement = ax3D;
                 wall.ObjectPlacement = lp;
 
+                // Create a material and assign a name to it
+                var material = model.Instances.New<IfcMaterial>();
+                material.Name = "some material";
 
                 // Where Clause: The IfcWallStandard relies on the provision of an IfcMaterialLayerSetUsage 
                 var ifcMaterialLayerSetUsage = model.Instances.New<IfcMaterialLayerSetUsage>();
@@ -264,14 +267,12 @@ namespace HelloWall
                 ifcMaterialLayerSetUsage.LayerSetDirection = IfcLayerSetDirectionEnum.AXIS2;
                 ifcMaterialLayerSetUsage.DirectionSense = IfcDirectionSenseEnum.NEGATIVE;
                 ifcMaterialLayerSetUsage.OffsetFromReferenceLine = 150;
+                ifcMaterialLayer.Material = material;
 
                 // Add material to wall
-                var material = model.Instances.New<IfcMaterial>();
-                material.Name = "some material";
                 var ifcRelAssociatesMaterial = model.Instances.New<IfcRelAssociatesMaterial>();
                 ifcRelAssociatesMaterial.RelatingMaterial = material;
                 ifcRelAssociatesMaterial.RelatedObjects.Add(wall);
-
                 ifcRelAssociatesMaterial.RelatingMaterial = ifcMaterialLayerSetUsage;
 
                 // IfcPresentationLayerAssignment is required for CAD presentation in IfcWall or IfcWallStandardCase
