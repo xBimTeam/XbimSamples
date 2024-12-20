@@ -170,6 +170,9 @@ namespace BasicExamples
 
         public int Size => caches.Sum(c => c.Size);
 
+        private bool isDisposed;
+        public bool IsDisposed => IsDisposed;
+
         public void Clear()
         {
             caches.ForEach(c => c.Clear());
@@ -179,6 +182,7 @@ namespace BasicExamples
         {
             caches.ForEach(c => c.Dispose());
             caches.Clear();
+            isDisposed = true;
         }
     }
 

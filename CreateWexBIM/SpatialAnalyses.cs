@@ -13,46 +13,47 @@ namespace CreateWexBIM
     {
         public static void AnalyseIntersections(IModel model)
         {
-            // validation tollerance might be based on something else
-            var volumeTollerance = Math.Pow(model.ModelFactors.PrecisionBoolean, 3);
+            //// validation tollerance might be based on something else
+            //var volumeTollerance = Math.Pow(model.ModelFactors.PrecisionBoolean, 3);
 
-            var logger = XbimLogging.LoggerFactory.CreateLogger<XbimGeometryEngine>();
-            var engine = new XbimGeometryEngine(logger);
-            var walls = model.Instances.OfType<IIfcWall>();
-            foreach (var wall in walls)
-            {
-                // assuming wall only has one shape and no openings or other features
-                var wallSolid = GetFirstGeometry(engine, wall, logger);
-                if (wallSolid == null || !wallSolid.IsValid)
-                {
-                    //TODO: handle other cases
-                    logger.LogWarning("Skipping wall #{wallId} as there is no solid geometry.", wall.EntityLabel);
-                    continue;
-                }
+            //var logger = XbimLogging.LoggerFactory.CreateLogger<XbimGeometryEngine>();
+            //var services = new XbimGeometryServicesFactory();
+            //var engine = new XbimGeometryEngine();
+            //var walls = model.Instances.OfType<IIfcWall>();
+            //foreach (var wall in walls)
+            //{
+            //    // assuming wall only has one shape and no openings or other features
+            //    var wallSolid = GetFirstGeometry(engine, wall, logger);
+            //    if (wallSolid == null || !wallSolid.IsValid)
+            //    {
+            //        //TODO: handle other cases
+            //        logger.LogWarning("Skipping wall #{wallId} as there is no solid geometry.", wall.EntityLabel);
+            //        continue;
+            //    }
 
-                // note this is not the most efficient way to get nested objects even though it is the least code impl.
-                var bars = wall.Nests.SelectMany(r => r.RelatedObjects).OfType<IIfcReinforcingBar>();
-                foreach (var bar in bars)
-                {
-                    var barGeom = GetFirstGeometry(engine, bar, logger);
-                    var barVolume = barGeom.Volume;
-                    if (barGeom == null || !barGeom.IsValid)
-                    {
-                        // TODO: handle other cases
-                        logger.LogWarning("Skipping reinforcing bar #{barId} as there is no solid geometry.", bar.EntityLabel);
-                        continue;
-                    }
+            //    // note this is not the most efficient way to get nested objects even though it is the least code impl.
+            //    var bars = wall.Nests.SelectMany(r => r.RelatedObjects).OfType<IIfcReinforcingBar>();
+            //    foreach (var bar in bars)
+            //    {
+            //        var barGeom = GetFirstGeometry(engine, bar, logger);
+            //        var barVolume = barGeom.Volume;
+            //        if (barGeom == null || !barGeom.IsValid)
+            //        {
+            //            // TODO: handle other cases
+            //            logger.LogWarning("Skipping reinforcing bar #{barId} as there is no solid geometry.", bar.EntityLabel);
+            //            continue;
+            //        }
 
-                    var intersectionParts = wallSolid.Intersection(barGeom, model.ModelFactors.PrecisionBoolean, logger);
-                    var intersectionVolume = intersectionParts.Sum(s => s.Volume);
-                    var volumeDiff = Math.Abs(intersectionVolume - barVolume);
+            //        var intersectionParts = wallSolid.Intersection(barGeom, model.ModelFactors.PrecisionBoolean, logger);
+            //        var intersectionVolume = intersectionParts.Sum(s => s.Volume);
+            //        var volumeDiff = Math.Abs(intersectionVolume - barVolume);
 
-                    if (volumeDiff > volumeTollerance)
-                    {
-                        logger.LogInformation("Bar #{barId} is declared to be withing wall #{wallId} but the volume difference is {volumeDiff}", bar.EntityLabel, wall.EntityLabel, volumeDiff);
-                    }
-                }
-            }
+            //        if (volumeDiff > volumeTollerance)
+            //        {
+            //            logger.LogInformation("Bar #{barId} is declared to be withing wall #{wallId} but the volume difference is {volumeDiff}", bar.EntityLabel, wall.EntityLabel, volumeDiff);
+            //        }
+            //    }
+            //}
         }
 
         private static IIfcGeometricRepresentationItem GetFirstGeometryRepresentation(IIfcProduct product)

@@ -8,7 +8,7 @@
   <ItemGroup>
     <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
-    <PackageReference Include="Xbim.Essentials" Version="5.1.323" />
-    <PackageReference Include="Xbim.Geometry" Version="5.1.430" />
+    <PackageReference Include="Xbim.Essentials" Version="6.0.489" />
+    <PackageReference Include="Xbim.Geometry" Version="6.1.801-netcore" />
   </ItemGroup>
 </Project>

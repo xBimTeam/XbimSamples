@@ -21,7 +21,7 @@ namespace BasicExamples
             using (var model = IfcStore.Open("SampleHouse.ifc"))
             using (var txn = model.BeginTransaction("Extending with carbon data"))
             {
-                var c = new Create(model);
+                var c = new EntityCreator(model);
 
                 // this will assign mandatory feelds of IfcRoot objects
                 model.EntityNew += OnEntityCreated;

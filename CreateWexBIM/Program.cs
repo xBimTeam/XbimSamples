@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using System.Diagnostics;
 using System.Globalization;
@@ -7,10 +8,12 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using Xbim.Common;
+using Xbim.Common.Configuration;
 using Xbim.Common.Geometry;
 using Xbim.Ifc;
 using Xbim.Ifc4.Interfaces;
 using Xbim.IO;
+using Xbim.IO.Memory;
 using Xbim.ModelGeometry.Scene;
 
 namespace CreateWexBIM
@@ -29,8 +32,15 @@ namespace CreateWexBIM
                .CreateLogger();
 
             // set up xBIM logging. It will use your providers.
-            XbimLogging.LoggerFactory.AddSerilog();
-            var log = XbimLogging.LoggerFactory.CreateLogger("WexbimCreation");
+            XbimServices.Current.ConfigureServices(svc => { 
+                svc.AddLogging(lc => lc.AddSerilog());
+                svc.AddXbimToolkit(xc =>
+                {
+                    xc.AddMemoryModel();
+                    xc.AddModelProvider<MemoryModelProvider>();
+                });
+            });
+            var log = XbimServices.Current.CreateLogger<Program>();
 
             var a = 0;
             var s = a.ToString("G", CultureInfo.InvariantCulture);
@@ -52,14 +62,13 @@ namespace CreateWexBIM
             log.LogInformation($"File size: {new FileInfo(fileName).Length / 1e6:N}MB");
 
             var w = Stopwatch.StartNew();
-            IfcStore.ModelProviderFactory.UseHeuristicModelProvider();
             using (var model = IfcStore.Open(fileName, null, -1))
             {
                 // model.ModelFactors.DeflectionAngle *= 5;
                 SpatialAnalyses.AnalyseIntersections(model);
 
                 log.LogInformation("Creating wexBIM file from IFC model.");
-                var context = new Xbim3DModelContext(model);
+                var context = new Xbim3DModelContext(model, engineVersion: Xbim.Geometry.Abstractions.XGeometryEngineVersion.V6);
                 context.CreateContext(null, false);
 
                 IVector3D translation = null;
