@@ -33,7 +33,7 @@ namespace CreateWexBIM
             XbimMatrix3D crsMatrix = GetMapMatrix(model, shapeContextId);
 
             // combine the shape local transformation with the CRS transformation to get global coordinates
-            var shapeTransform = crsMatrix * shape.Transformation;
+            var shapeTransform =  shape.Transformation * crsMatrix;
 
             // apply the transformation to all points of the geometry as you currently do
 
